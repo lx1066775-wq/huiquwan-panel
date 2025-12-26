@@ -1,0 +1,20 @@
+<!DOCTYPE html> <html lang="zh-CN"> <head> <meta charset="UTF-8"> <title>新建订单</title> <style> body { font-family:-apple-system,BlinkMacSystemFont; background:#f5f7fb; padding:20px; } .card { background:#fff; padding:15px; 
+margin-bottom:15px; border-radius:6px; } input { width:100%; padding:6px; margin:6px 0; box-sizing:border-box; } button { padding:6px 12px; cursor:pointer; } </style> </head> <body> <h2>新建订单</h2> <div class="card"> 
+<h3>线索信息（自动带入）</h3> <div>市场：<span id="m"></span></div> <div>广告：<span id="a"></span></div> <div>客服：<span id="s"></span></div> <div>运营：<span id="o"></span></div> <div>标识：<span id="u"></span></div> </div> <div 
+class="card"> <h3>订单信息</h3> <input id="customer" placeholder="客户名称"> <input id="product" placeholder="产品 / 行程（必填）"> <button onclick="save()">保存订单</button> </div> <script> function api(url,data){
+  return fetch(url,{ method:data?"POST":"GET", headers:{ "Content-Type":"application/json" }, body:data?JSON.stringify(data):null
+  }).then(r=>r.json());
+}
+var p = new URLSearchParams(location.search); var leadId = p.get("lead_id"); function loadLead(){ if(!leadId) return; api("/api/records/" + leadId).then(r=>{ if(!r.ok) return; var d = r.data; m.innerText = d.market || "-"; 
+    a.innerText = d.ad_type || "-"; s.innerText = d.service || "-"; o.innerText = d.operator || "-"; u.innerText = d.user_mark || "-"; customer.value = d.user_mark || "";
+  });
+}
+function save(){ if(!product.value){ alert("请填写产品"); return;
+  }
+  api("/api/orders",{ lead_id: leadId, customer_name: customer.value, product_name: product.value
+  }).then(r=>{
+    if(r.ok){ alert("订单已创建"); location.href = "/view.html";
+    }
+  });
+}
+document.addEventListener("DOMContentLoaded", loadLead); </script> </body> </html>
