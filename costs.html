@@ -2,56 +2,74 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>消费录入（按天 / 按版位）</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Costs（经营视图）</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:12px 0; }
+    .toolbar .card { display:flex; gap:10px; align-items:center; padding:10px; border:1px solid #eee; border-radius:10px; }
+    .muted { color:#888; font-size:12px; }
+    .num { text-align:right; }
+    .in { width: 100%; box-sizing: border-box; padding:6px 8px; }
+    th { background:#fafafa; }
+    .toast {
+      position: fixed; left: 50%; top: 18px; transform: translateX(-50%);
+      background: rgba(0,0,0,.80); color: #fff; padding: 10px 14px; border-radius: 10px;
+      opacity: 0; pointer-events: none; transition: opacity .2s ease;
+      max-width: 90vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      z-index: 9999;
+    }
+    .toast.show { opacity: 1; }
+  </style>
 </head>
+
 <body>
+  <h2>Costs（按天 / 市场 / 运营 / 来源 / 广告类型）</h2>
+  <div class="muted">
+    规则：数量（加粉/有效/成交）实时来自 view；运营只填“消费”。自然流消费=0但必须展示。view=0也允许新增消费行。
+  </div>
 
-<h2>消费录入（按天 / 按版位）</h2>
+  <!-- 顶部工具栏 -->
+  <div class="toolbar">
+    <div class="card">
+      <label>日期：</label>
+      <input type="date" id="day" />
+      <button id="btnReload">刷新</button>
+    </div>
 
-<!-- 查询区 -->
-<div class="card">
-  <select id="q_market"></select>
-  <select id="q_source"></select>
-  <select id="q_ad_type"></select>
-  <input id="q_keyword" placeholder="关键词 / 版位 / 备注" />
-  <button onclick="loadCosts()">查询</button>
-</div>
+    <div class="card">
+      <button id="btnAdd">新增消费行（无粉也可记账）</button>
+      <span class="muted">默认：市场=新疆，广告类型=dou+</span>
+    </div>
+  </div>
 
-<!-- 新增区 -->
-<div class="card">
-  <input type="date" id="date" />
-  <select id="market"></select>
-  <select id="source"></select>
+  <!-- 表格（经营汇总） -->
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>市场</th>
+        <th>运营</th>
+        <th>来源</th>
+        <th>广告类型</th>
+        <th class="num">消费</th>
 
-  <!-- 广告类型：必须和录入系统一致 -->
-  <select id="ad_type"></select>
+        <th class="num">加粉</th>
+        <th class="num">有效</th>
+        <th class="num">成交</th>
 
-  <input id="slot" placeholder="消费版位（如 FB-新疆-6D）" />
-  <input id="amount" type="number" placeholder="金额" />
-  <input id="remark" placeholder="备注（可选）" />
+        <th class="num">有效成本</th>
+        <th class="num">成交成本</th>
 
-  <button onclick="addCost()">新增</button>
-</div>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
 
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>日期</th>
-      <th>市场</th>
-      <th>来源</th>
-      <th>广告类型</th>
-      <th>消费版位</th>
-      <th>金额</th>
-      <th>备注</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
+  <div id="toast" class="toast"></div>
 
-<script src="api.js"></script>
-<script src="costs.js"></script>
+  <script src="api.js"></script>
+  <script src="costs.js"></script>
 </body>
 </html>
