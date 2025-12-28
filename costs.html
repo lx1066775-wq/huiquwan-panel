@@ -2,18 +2,16 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>Costs（按天 / 市场 / 运营 / 来源 / 广告类型）</title>
+  <title>Costs</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<h2>Costs（按天 / 市场 / 运营 / 来源 / 广告类型）</h2>
 
-<div class="card">
-  <input type="date" id="day" />
-  <button onclick="loadCosts()">刷新</button>
-  <button onclick="addEmptyRow()">新增消费行</button>
-</div>
+<h1>Costs（按天 / 市场 / 运营 / 来源 / 广告类型）</h1>
+
+<input type="date" id="date" />
+<button onclick="loadCosts()">刷新</button>
+<button onclick="addRow()">新增消费行</button>
 
 <table border="1" width="100%">
   <thead>
@@ -24,22 +22,19 @@
       <th>来源</th>
       <th>广告类型</th>
       <th>消费</th>
-      <th>加粉</th>
-      <th>有效</th>
-      <th>成交</th>
       <th>操作</th>
     </tr>
   </thead>
   <tbody id="tbody">
-    <tr><td colspan="10">加载中...</td></tr>
+    <tr><td colspan="7">加载中...</td></tr>
   </tbody>
 </table>
 
-<!-- ✅ API_BASE 写死 -->
+<div id="toast" class="toast"></div>
+
 <script>
   window.API_BASE = "https://xt.huiquwan.cn/api";
 </script>
-
 <script src="costs.js"></script>
 </body>
 </html>
