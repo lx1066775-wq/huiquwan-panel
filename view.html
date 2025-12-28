@@ -5,13 +5,11 @@
   <title>录入系统（NICE · 一体式·有保存）</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-<h2>录入系统（NICE · 一体式·有保存）</h2>
 
-<div class="card">
-  <button onclick="loadRecords()">刷新</button>
-</div>
+<h1>录入系统（NICE · 一体式·有保存）</h1>
+
+<button onclick="loadRecords()">刷新</button>
 
 <table border="1" width="100%">
   <thead>
@@ -36,12 +34,11 @@
 
 <div id="toast" class="toast"></div>
 
-<!-- ✅ API_BASE 明确写死 -->
 <script>
+  /** ✅ 唯一 API_BASE */
   window.API_BASE = "https://xt.huiquwan.cn/api";
 </script>
 
-<!-- ✅ 主逻辑 -->
 <script src="view.js"></script>
 </body>
 </html>
