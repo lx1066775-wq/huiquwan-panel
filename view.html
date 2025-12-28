@@ -1,44 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <title>录入系统（NICE · 一体式·有保存）</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>录入系统（NICE版）</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <div class="title">录入系统（NICE · 一体式·有保存）</div>
+        <div class="sub">新增 → 编辑（不落库）→ 保存（后端落库）→ 筛选（管理）</div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btnAdd">+ 新增</button>
+        <button class="btn ghost" id="btnReload">刷新</button>
+      </div>
+    </div>
 
-<h1>录入系统（NICE · 一体式·有保存）</h1>
+    <div class="card filter">
+      <div class="filter-row">
+        <div class="field">
+          <label>日期快捷</label>
+          <select id="quickDate">
+            <option value="all">全部</option>
+            <option value="today">今天</option>
+            <option value="yesterday">昨天</option>
+            <option value="7">最近7天</option>
+            <option value="30">最近30天</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>开始</label>
+          <input type="date" id="startDate"/>
+        </div>
+        <div class="field">
+          <label>结束</label>
+          <input type="date" id="endDate"/>
+        </div>
 
-<button onclick="loadRecords()">刷新</button>
+        <div class="field">
+          <label>市场</label>
+          <select id="fMarket"></select>
+        </div>
+        <div class="field">
+          <label>运营</label>
+          <select id="fOperator"></select>
+        </div>
+        <div class="field">
+          <label>来源</label>
+          <select id="fSource"></select>
+        </div>
+      </div>
 
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>日期</th>
-      <th>市场</th>
-      <th>运营</th>
-      <th>来源</th>
-      <th>广告类型</th>
-      <th>号码/标识</th>
-      <th>客服</th>
-      <th>有效</th>
-      <th>成交</th>
-      <th>备注</th>
-    </tr>
-  </thead>
-  <tbody id="tbody">
-    <tr><td colspan="11">加载中...</td></tr>
-  </tbody>
-</table>
+      <div class="filter-row">
+        <div class="field">
+          <label>广告类型</label>
+          <select id="fAdType"></select>
+        </div>
+        <div class="field">
+          <label>客服</label>
+          <select id="fService"></select>
+        </div>
+        <div class="field">
+          <label>有效</label>
+          <select id="fValid"></select>
+        </div>
+        <div class="field">
+          <label>成交</label>
+          <select id="fDeal"></select>
+        </div>
+        <div class="field grow">
+          <label>关键字（号码/备注）</label>
+          <input id="fKeyword" placeholder="例如：414114 / 微信 / 备注关键字"/>
+        </div>
+        <div class="filter-actions">
+          <button class="btn" id="btnQuery">查询</button>
+          <button class="btn ghost" id="btnReset">清空筛选</button>
+        </div>
+      </div>
+    </div>
 
-<div id="toast" class="toast"></div>
+    <div class="card">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="col-id">ID</th>
+              <th>日期</th>
+              <th>市场</th>
+              <th>运营</th>
+              <th>来源</th>
+              <th>广告类型</th>
+              <th>号码/标识</th>
+              <th>客服</th>
+              <th>有效</th>
+              <th>是否成交</th>
+              <th>备注</th>
+              <th class="col-op">操作</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="12" class="muted">加载中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-<script>
-  /** ✅ 唯一 API_BASE */
-  window.API_BASE = "https://xt.huiquwan.cn/api";
-</script>
+    <div id="toast" class="toast"></div>
+  </div>
 
+<!-- 必须在 view.js 之前 -->
+<script src="js/api.js"></script>
 <script src="view.js"></script>
+
+
 </body>
 </html>
