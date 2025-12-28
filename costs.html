@@ -69,12 +69,12 @@
 
   <div id="toast" class="toast"></div>
 
-  <!-- ✅ 关键：声明 API 前缀（否则会 404 / 405） -->
+  <!-- 🔴 关键：API 前缀（没有这句一定 404） -->
   <script>
     window.API_BASE = "/api";
   </script>
 
-  <!-- ✅ 只需要 costs.js，不再依赖 api.js -->
+  <!-- 🔴 只加载这一份 JS -->
   <script src="costs.js"></script>
 </body>
 </html>
